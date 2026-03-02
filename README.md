@@ -1,140 +1,108 @@
-# accepts
+# Bitespeed Identity Reconciliation Service
 
-[![NPM Version][npm-version-image]][npm-url]
-[![NPM Downloads][npm-downloads-image]][npm-url]
-[![Node.js Version][node-version-image]][node-version-url]
-[![Build Status][github-actions-ci-image]][github-actions-ci-url]
-[![Test Coverage][coveralls-image]][coveralls-url]
+A web service that identifies and keeps track of customer identity across multiple purchases by reconciling different email addresses and phone numbers to the same person.
 
-Higher level content negotiation based on [negotiator](https://www.npmjs.com/package/negotiator).
-Extracted from [koa](https://www.npmjs.com/package/koa) for general use.
+## Features
 
-In addition to negotiator, it allows:
+- Identity reconciliation based on email and phone number
+- Automatic linking of contacts with shared information
+- Primary and secondary contact management
+- RESTful API endpoint
 
-- Allows types as an array or arguments list, ie `(['text/html', 'application/json'])`
-  as well as `('text/html', 'application/json')`.
-- Allows type shorthands such as `json`.
-- Returns `false` when no types match
-- Treats non-existent headers as `*`
+## Tech Stack
 
-## Installation
+- Node.js with JavaScript
+- Express.js
+- PostgreSQL
+- Deployed on: [To be added]
 
-This is a [Node.js](https://nodejs.org/en/) module available through the
-[npm registry](https://www.npmjs.com/). Installation is done using the
-[`npm install` command](https://docs.npmjs.com/getting-started/installing-npm-packages-locally):
+## Setup
 
-```sh
-$ npm install accepts
-```
+1. *Clone the repository*
 
-## API
+2. *Install dependencies:*
+bash
+npm install
 
-```js
-var accepts = require('accepts')
-```
 
-### accepts(req)
+3. *Setup PostgreSQL Database:*
+   - Use local PostgreSQL or free cloud service (Railway/Neon/Supabase)
+   - Copy .env.example to .env
+   - Update DATABASE_URL with your database credentials
 
-Create a new `Accepts` object for the given `req`.
+4. *Run database migrations:*
+bash
+npm run migrate
 
-#### .charset(charsets)
 
-Return the first accepted charset. If nothing in `charsets` is accepted,
-then `false` is returned.
+5. *Start the server:*
+bash
+# Development (with auto-reload)
+npm run dev
 
-#### .charsets()
+# Production
+npm start
 
-Return the charsets that the request accepts, in the order of the client's
-preference (most preferred first).
 
-#### .encoding(encodings)
+Server will run on http://localhost:3000
 
-Return the first accepted encoding. If nothing in `encodings` is accepted,
-then `false` is returned.
+For detailed setup guide in Hindi, see [SETUP_GUIDE.md](SETUP_GUIDE.md)
 
-#### .encodings()
+## API Endpoint
 
-Return the encodings that the request accepts, in the order of the client's
-preference (most preferred first).
+### POST /identify
 
-#### .language(languages)
+Identifies and consolidates customer contact information.
 
-Return the first accepted language. If nothing in `languages` is accepted,
-then `false` is returned.
-
-#### .languages()
-
-Return the languages that the request accepts, in the order of the client's
-preference (most preferred first).
-
-#### .type(types)
-
-Return the first accepted type (and it is returned as the same text as what
-appears in the `types` array). If nothing in `types` is accepted, then `false`
-is returned.
-
-The `types` array can contain full MIME types or file extensions. Any value
-that is not a full MIME types is passed to `require('mime-types').lookup`.
-
-#### .types()
-
-Return the types that the request accepts, in the order of the client's
-preference (most preferred first).
-
-## Examples
-
-### Simple type negotiation
-
-This simple example shows how to use `accepts` to return a different typed
-respond body based on what the client wants to accept. The server lists it's
-preferences in order and will get back the best match between the client and
-server.
-
-```js
-var accepts = require('accepts')
-var http = require('http')
-
-function app (req, res) {
-  var accept = accepts(req)
-
-  // the order of this list is significant; should be server preferred order
-  switch (accept.type(['json', 'html'])) {
-    case 'json':
-      res.setHeader('Content-Type', 'application/json')
-      res.write('{"hello":"world!"}')
-      break
-    case 'html':
-      res.setHeader('Content-Type', 'text/html')
-      res.write('<b>hello, world!</b>')
-      break
-    default:
-      // the fallback is text/plain, so no need to specify it above
-      res.setHeader('Content-Type', 'text/plain')
-      res.write('hello, world!')
-      break
-  }
-
-  res.end()
+*Request Body:*
+json
+{
+  "email": "string (optional)",
+  "phoneNumber": "string (optional)"
 }
 
-http.createServer(app).listen(3000)
-```
 
-You can test this out with the cURL program:
-```sh
-curl -I -H'Accept: text/html' http://localhost:3000/
-```
+*Response:*
+json
+{
+  "contact": {
+    "primaryContatctId": 1,
+    "emails": ["lorraine@hillvalley.edu", "mcfly@hillvalley.edu"],
+    "phoneNumbers": ["123456"],
+    "secondaryContactIds": [23]
+  }
+}
 
-## License
 
-[MIT](LICENSE)
+## Deployment
 
-[coveralls-image]: https://badgen.net/coveralls/c/github/jshttp/accepts/master
-[coveralls-url]: https://coveralls.io/r/jshttp/accepts?branch=master
-[github-actions-ci-image]: https://badgen.net/github/checks/jshttp/accepts/master?label=ci
-[github-actions-ci-url]: https://github.com/jshttp/accepts/actions/workflows/ci.yml
-[node-version-image]: https://badgen.net/npm/node/accepts
-[node-version-url]: https://nodejs.org/en/download
-[npm-downloads-image]: https://badgen.net/npm/dm/accepts
-[npm-url]: https://npmjs.org/package/accepts
-[npm-version-image]: https://badgen.net/npm/v/accepts
+*Option 1: Render.com (Recommended)*
+1. Push code to GitHub
+2. Create new Web Service on Render
+3. Add PostgreSQL database
+4. Set DATABASE_URL environment variable
+5. Deploy automatically
+
+*Option 2: Railway.app*
+1. Push code to GitHub
+2. Create new project on Railway
+3. Add PostgreSQL plugin
+4. Deploy
+
+The service is deployed at: [Add your deployed URL here]
+
+## Testing
+
+Use the [test-requests.http](test-requests.http) file with REST Client extension in VS Code, or use Postman/Thunder Client to test the API.
+
+## Database Schema
+
+*Contact Table:*
+- id - Primary key
+- phoneNumber - Customer phone number (optional)
+- email - Customer email (optional)
+- linkedId - ID of linked primary contact (optional)
+- linkPrecedence - "primary" or "secondary"
+- createdAt - Timestamp
+- updatedAt - Timestamp
+- deletedAt - Soft delete timestamp (optional)
