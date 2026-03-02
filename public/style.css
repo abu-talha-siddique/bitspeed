@@ -1,12 +1,12 @@
 :root {
-  --bg: #0f172a;
-  --card: #111827;
-  --card-soft: #1f2937;
-  --text: #e5e7eb;
-  --muted: #9ca3af;
-  --accent: #22c55e;
-  --accent-2: #06b6d4;
-  --danger: #ef4444;
+  --bg: #f9fafb;
+  --card: #ffffff;
+  --card-soft: #f3f4f6;
+  --text: #111827;
+  --muted: #6b7280;
+  --accent: #3b82f6;
+  --accent-2: #6366f1;
+  --danger: #dc2626;
 }
 
 * {
@@ -16,7 +16,7 @@
 body {
   margin: 0;
   font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
-  background: radial-gradient(circle at top right, #0b2239 0%, var(--bg) 38%);
+  background: var(--bg);
   color: var(--text);
 }
 
@@ -27,11 +27,11 @@ body {
 }
 
 .card {
-  background: linear-gradient(180deg, rgba(31, 41, 55, 0.96), rgba(17, 24, 39, 0.96));
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--card);
+  border: 1px solid var(--card-soft);
   border-radius: 16px;
   padding: 20px;
-  backdrop-filter: blur(6px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
 .hero h1 {
@@ -50,8 +50,8 @@ body {
   font-size: 12px;
   font-weight: 700;
   letter-spacing: 0.5px;
-  color: #082f1d;
-  background: linear-gradient(90deg, #34d399, #6ee7b7);
+  color: #1e3a8a;
+  background: linear-gradient(90deg, #93c5fd, #bfdbfe);
   border-radius: 999px;
   padding: 6px 10px;
 }
@@ -68,8 +68,8 @@ body {
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  background: #eab308;
-  box-shadow: 0 0 0 4px rgba(234, 179, 8, 0.18);
+  background: #f59e0b;
+  box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.18);
 }
 
 .dot.up {
@@ -112,8 +112,8 @@ label {
 
 input {
   width: 100%;
-  background: #0b1220;
-  border: 1px solid #334155;
+  background: var(--card-soft);
+  border: 1px solid #d1d5db;
   border-radius: 10px;
   color: var(--text);
   padding: 11px 12px;
@@ -122,7 +122,7 @@ input {
 
 input:focus {
   border-color: var(--accent-2);
-  box-shadow: 0 0 0 3px rgba(6, 182, 212, 0.16);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.16);
 }
 
 button {
@@ -133,7 +133,7 @@ button {
   color: white;
   font-weight: 700;
   cursor: pointer;
-  background: linear-gradient(90deg, #06b6d4, #2563eb);
+  background: linear-gradient(90deg, #3b82f6, #6366f1);
 }
 
 button:disabled {
@@ -152,9 +152,9 @@ button:disabled {
   min-height: 310px;
   max-height: 520px;
   overflow: auto;
-  background: #0b1220;
-  color: #dbeafe;
-  border: 1px solid #334155;
+  background: var(--card-soft);
+  color: var(--text);
+  border: 1px solid #d1d5db;
   border-radius: 10px;
   padding: 12px;
   line-height: 1.45;
