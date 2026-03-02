@@ -1,0 +1,7 @@
+version: 2
+build:
+  env:
+    - key: NODE_ENV
+      value: production
+run:
+  command: node src/database/migrate.js && npm start

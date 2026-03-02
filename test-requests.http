@@ -1,0 +1,123 @@
+### Test Case 1: New Contact (No existing records)
+POST http://localhost:8080/identify
+Content-Type: application/json
+
+{
+  "email": "lorraine@hillvalley.edu",
+  "phoneNumber": "123456"
+}
+
+### Expected Response:
+# {
+#   "contact": {
+#     "primaryContatctId": 1,
+#     "emails": ["lorraine@hillvalley.edu"],
+#     "phoneNumbers": ["123456"],
+#     "secondaryContactIds": []
+#   }
+# }
+
+---
+
+### Test Case 2: New Information (Creates Secondary)
+POST http://localhost:8080/identify
+Content-Type: application/json
+
+{
+  "email": "mcfly@hillvalley.edu",
+  "phoneNumber": "123456"
+}
+
+### Expected Response:
+# {
+#   "contact": {
+#     "primaryContatctId": 1,
+#     "emails": ["lorraine@hillvalley.edu", "mcfly@hillvalley.edu"],
+#     "phoneNumbers": ["123456"],
+#     "secondaryContactIds": [2]
+#   }
+# }
+
+---
+
+### Test Case 3: Existing Contact (No new info)
+POST http://localhost:8080/identify
+Content-Type: application/json
+
+{
+  "email": "lorraine@hillvalley.edu",
+  "phoneNumber": "123456"
+}
+
+### Expected Response:
+# Same as Test Case 2 (no new contact created)
+
+---
+
+### Test Case 4: Merge Two Primaries
+# First create two separate primaries:
+
+POST http://localhost:8080/identify
+Content-Type: application/json
+
+{
+  "email": "george@hillvalley.edu",
+  "phoneNumber": "919191"
+}
+
+---
+
+POST http://localhost:8080/identify
+Content-Type: application/json
+
+{
+  "email": "biffsucks@hillvalley.edu",
+  "phoneNumber": "717171"
+}
+
+---
+
+# Now merge them:
+POST http://localhost:8080/identify
+Content-Type: application/json
+
+{
+  "email": "george@hillvalley.edu",
+  "phoneNumber": "717171"
+}
+
+### Expected Response:
+# Older primary remains, newer becomes secondary
+# {
+#   "contact": {
+#     "primaryContatctId": 3,
+#     "emails": ["george@hillvalley.edu", "biffsucks@hillvalley.edu"],
+#     "phoneNumbers": ["919191", "717171"],
+#     "secondaryContactIds": [4]
+#   }
+# }
+
+---
+
+### Test Case 5: Only Email
+POST http://localhost:8080/identify
+Content-Type: application/json
+
+{
+  "email": "doc@hillvalley.edu"
+}
+
+---
+
+### Test Case 6: Only Phone Number
+POST http://localhost:8080/identify
+Content-Type: application/json
+
+{
+  "phoneNumber": "555666"
+}
+
+---
+
+### Health Check
+GET http://localhost:8080/health

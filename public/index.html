@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>BiteSpeed</title>
+    <style>
+      body { font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif; background:#0f0f11; color:#e6e6e6; margin:0; }
+      .wrap{max-width:900px;margin:48px auto;padding:24px}
+      h1{font-size:28px;margin:0 0 8px}
+      p{color:#cfcfcf}
+      .box{background:#161617;padding:20px;border-radius:8px;margin-top:18px}
+      a.button{display:inline-block;margin-top:12px;padding:10px 14px;background:#2b6cff;color:white;border-radius:6px;text-decoration:none}
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <h1>BiteSpeed</h1>
+      <p>Local development server is running. This is your project UI placeholder.</p>
+
+      <div class="box">
+        <strong>Welcome!</strong>
+        <p>Replace this file with your real frontend. For now, the server serves this static page from <code>public/index.html</code>.</p>
+        <a class="button" href="#" onclick="alert('This is a placeholder UI')">Try action</a>
+      </div>
+    </div>
+  </body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bitespeed Identity Reconciliation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+  <main class="page">
+    <section class="hero card">
+      <p class="badge">Backend Task UI</p>
+      <h1>Bitespeed Identity Reconciliation</h1>
+      <p class="subtext">
+        Email aur phoneNumber do, aur consolidated identity response live dekho.
+      </p>
+      <div class="status-row">
+        <span class="dot" id="serverDot"></span>
+        <span id="serverStatus">Checking server...</span>
+      </div>
+    </section>
+
+    <section class="grid">
+      <div class="card">
+        <h2>Identify Contact</h2>
+        <form id="identifyForm" class="form">
+          <label for="email">Email</label>
+          <input id="email" name="email" type="email" placeholder="test@example.com" />
+
+          <label for="phoneNumber">Phone Number</label>
+          <input id="phoneNumber" name="phoneNumber" type="text" placeholder="123456" />
+
+          <button id="submitBtn" type="submit">Send Identify Request</button>
+        </form>
+        <p class="hint">Note: Email ya phoneNumber mein se kam se kam ek value required hai.</p>
+      </div>
+
+      <div class="card">
+        <h2>Response</h2>
+        <pre id="responseBox" class="response">No request sent yet.</pre>
+      </div>
+    </section>
+  </main>
+
+  <script src="/app.js"></script>
+</body>
+</html>
